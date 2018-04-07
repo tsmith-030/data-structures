@@ -1,5 +1,8 @@
 import structures.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by tsmj2 on 4/3/18.
  */
@@ -10,7 +13,7 @@ public class DataStructureApplication {
     }
 
     private static void binarySearchTreeTest() {
-        MyBinarySearchTree tree = new MyBinarySearchTree<String>(30, "");
+        MyBinarySearchTree tree = new MyBinarySearchTree<>(30, "");
         tree.insert(10, "");
         tree.insert(4, "");
         tree.insert(1, "");
@@ -22,6 +25,13 @@ public class DataStructureApplication {
         tree.insert(15, "");
 
         tree.printTree();
+
+
+        System.out.println("\n\nData at key 100: ");
+        tree.get(100);
+
+        System.out.println("\nData at key 47: ");
+        System.out.println(Arrays.toString(tree.get(47).toArray()));
     }
 
     private static void linkedListTest() {
