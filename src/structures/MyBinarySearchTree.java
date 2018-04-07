@@ -1,32 +1,44 @@
 package structures;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by tmackSickles on 4/7/18.
  */
-public class MyBinarySearchTree {
+public class MyBinarySearchTree<T> {
     private Node root;
     private int depth;
 
-    public MyBinarySearchTree(int key) {
-        this.root = new Node(key);
+    public MyBinarySearchTree(int key, T data) {
+        this.root = new Node(key, data);
     }
 
-    public void insert(int newKey) {
-        insert(root, newKey);
+    public void insert(int newKey, T data) {
+        insert(root, newKey, data);
     }
 
-    private void insert(Node node, int key) {
-        if(key < node.key && node.left != null) {
-            insert(node.left, key);
+    // O(log(n))
+    private void insert(Node node, int key, T data) {
+        if (key < node.key) {
+            if (node.left == null) {
+                node.left = new Node(key, data);
+            } else {
+                insert(node.left, key, data);
+            }
         }
-        if(node.right != null && key > node.key) {
-            insert(node.right, key);
+
+        if (key > node.key) {
+            if (node.right == null) {
+                node.right = new Node(key, data);
+            } else {
+                insert(node.right, key, data);
+            }
         }
-        if(key < node.key && node.left == null) {
-            node.left = new Node(key);
-        }
-        if(key > node.key && node.right == null) {
-            node.right = new Node(key);
+
+        if(key == node.key) {
+            node.data.add(data);
+            node.count++;
         }
 
         return;
@@ -34,31 +46,64 @@ public class MyBinarySearchTree {
 
     //TODO: print counts if count > 1
     public void printTree() {
-        System.out.println("Tree in preorder: ");
+        System.out.println("Tree inorder: ");
+        printTreeInorder(root);
+
+        System.out.println("\n\nTree preorder: ");
         printTreePreorder(root);
+
+        System.out.println("\n\nTree postorder: ");
+        printTreePostorder(root);
     }
 
-    private void printTreePreorder(Node node) {
-        if(node == null) {
+    // O(log(n))
+    private void printTreeInorder(Node node) {
+        if (node == null) {
             return;
         }
 
+        printTreeInorder(node.left);
+        System.out.print(node.key +
+                ((node.count > 1) ? "[" + node.count + "] " : " "));
+        printTreeInorder(node.right);
+    }
+
+
+    private void printTreePreorder(Node node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.print(node.key +
+                ((node.count > 1) ? "[" + node.count + "] " : " "));
         printTreePreorder(node.left);
-        System.out.print(node.key + " ");
         printTreePreorder(node.right);
     }
 
-    private static class Node {
+    private void printTreePostorder(Node node) {
+        if (node == null) {
+            return;
+        }
+
+        printTreePostorder(node.left);
+        printTreePostorder(node.right);
+        System.out.print(node.key +
+                ((node.count > 1) ? "[" + node.count + "] " : " "));
+    }
+
+    private static class Node<T> {
         int key;
+        List<T> data = new LinkedList<>();
         int count;
         Node left;
         Node right;
 
-        public Node(int key) {
+        public Node(int key, T data) {
             this.key = key;
+            this.data.add(data);
             this.left = null;
             this.right = null;
-            count = 1;
+            this.count = 1;
         }
     }
 }

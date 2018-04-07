@@ -10,10 +10,16 @@ public class DataStructureApplication {
     }
 
     private static void binarySearchTreeTest() {
-        MyBinarySearchTree tree = new MyBinarySearchTree(8);
-        tree.insert(10);
-        tree.insert(4);
-        tree.insert(1);
+        MyBinarySearchTree tree = new MyBinarySearchTree<String>(30, "");
+        tree.insert(10, "");
+        tree.insert(4, "");
+        tree.insert(1, "");
+        tree.insert(56, "");
+        tree.insert(47, "Item 1");
+        tree.insert(47, "Item 2");
+        tree.insert(32, "Target");
+        tree.insert(29, "");
+        tree.insert(15, "");
 
         tree.printTree();
     }
