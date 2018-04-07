@@ -41,6 +41,8 @@ public class DataStructureApplication {
 
         list.chopTail();
         list.printList("Chop Tail");
+
+        System.out.println("The list has a length of: " + list.length());
     }
 
 }

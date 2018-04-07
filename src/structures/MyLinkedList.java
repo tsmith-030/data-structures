@@ -7,25 +7,30 @@ package structures;
 public class MyLinkedList<T> {
     private Node head;
     private Node tail;
+    private int length;
 
     public MyLinkedList(T initialData) {
         this.head = this.tail = new Node(initialData, null);
+        length = 1;
     }
 
     // O(1)
     public void addFirst(T newData) {
         head = new Node(newData, head);
+        length++;
     }
 
     // O(1)
     public void addLast(T newData) {
         tail.next = new Node(newData, null);
         tail = tail.next;
+        length++;
     }
 
     // O(1)
     public void chopHead() {
         head = head.next;
+        length--;
     }
 
     // O(n)
@@ -43,6 +48,7 @@ public class MyLinkedList<T> {
 
         tail = nodeBeforeTarget;
         tail.next = null;
+        length--;
     }
 
     // O(n)
@@ -60,6 +66,7 @@ public class MyLinkedList<T> {
             i++;
         }
         nodeBeforeTarget.next = new Node(newData, nodeBeforeTarget.next);
+        length++;
     }
 
     // O(n)
@@ -77,6 +84,7 @@ public class MyLinkedList<T> {
             i++;
         }
         nodeBeforeTarget.next = nodeBeforeTarget.next.next;
+        length--;
     }
 
     // O(n)
@@ -99,6 +107,10 @@ public class MyLinkedList<T> {
             nextNode = nextNode.next;
         }
         System.out.println("\n");
+    }
+
+    public int length() {
+        return this.length;
     }
 
     private static class Node<T> {
