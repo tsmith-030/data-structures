@@ -5,14 +5,15 @@ import structures.*;
  */
 public class DataStructureApplication {
     public static void main(String[] args) {
-        linkedListTest();
-//        binarySearchTreeTest();
+//        linkedListTest();
+        binarySearchTreeTest();
     }
 
     private static void binarySearchTreeTest() {
         MyBinarySearchTree tree = new MyBinarySearchTree(8);
         tree.insert(10);
         tree.insert(4);
+        tree.insert(1);
 
         tree.printTree();
     }

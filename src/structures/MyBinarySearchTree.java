@@ -1,59 +1,51 @@
 package structures;
 
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 /**
  * Created by tmackSickles on 4/7/18.
  */
 public class MyBinarySearchTree {
     private Node root;
+    private int depth;
 
     public MyBinarySearchTree(int key) {
         this.root = new Node(key);
     }
 
     public void insert(int newKey) {
-        Node parent = traverse(root, newKey);
+        insert(root, newKey);
+    }
 
-        if(newKey < parent.key) {
-            parent.left = new Node(newKey);
-        } else if (newKey > parent.key) {
-            parent.right = new Node(newKey);
-        } else {
-            parent.count++;
+    private void insert(Node node, int key) {
+        if(key < node.key && node.left != null) {
+            insert(node.left, key);
         }
+        if(node.right != null && key > node.key) {
+            insert(node.right, key);
+        }
+        if(key < node.key && node.left == null) {
+            node.left = new Node(key);
+        }
+        if(key > node.key && node.right == null) {
+            node.right = new Node(key);
+        }
+
+        return;
     }
 
     //TODO: print counts if count > 1
     public void printTree() {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t" + root.key);
-        System.out.println("\t\t\t\t\t\t\t\t   / \\");
-
-        int i = 9;
-        int j = 9;
-
-        while(root.left != null) {
-            printNextNode(root.left, i);
-            i--;
-        }
+        System.out.println("Tree in preorder: ");
+        printTreePreorder(root);
     }
 
-    private void printNextNode(Node node, int count) {
-        String tabs = IntStream.range(0, count).mapToObj(i -> "\t").collect(Collectors.joining(""));
-
-        System.out.println(tabs + node.left.key + "   " + node.right.key);
-    }
-
-    private Node traverse(Node node, int key) {
-        while(key > node.key && node.right != null) {
-            traverse(node.right, key);
+    private void printTreePreorder(Node node) {
+        if(node == null) {
+            return;
         }
 
-        while(key < node.key && node.left != null) {
-            traverse(node.left, key);
-        }
-        return node;
+        printTreePreorder(node.left);
+        System.out.print(node.key + " ");
+        printTreePreorder(node.right);
     }
 
     private static class Node {
@@ -64,6 +56,8 @@ public class MyBinarySearchTree {
 
         public Node(int key) {
             this.key = key;
+            this.left = null;
+            this.right = null;
             count = 1;
         }
     }
